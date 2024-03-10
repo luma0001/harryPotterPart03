@@ -1,10 +1,14 @@
 package kea.exersice.harrypotter003.app;
 
 
+import kea.exersice.harrypotter003.model.EmpType;
 import kea.exersice.harrypotter003.model.House;
 import kea.exersice.harrypotter003.model.Student;
+import kea.exersice.harrypotter003.model.Teacher;
+import kea.exersice.harrypotter003.model.EmpType;
 //import kea.exersice.harrypotter003.repository.StudentRepository;
 import kea.exersice.harrypotter003.repository.StudentRepository;
+import kea.exersice.harrypotter003.repository.TeacherRepository;
 import org.hibernate.annotations.Comment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -17,6 +21,7 @@ public class InitData implements CommandLineRunner {
 
     @Autowired
     private StudentRepository studentRepository;
+    private  TeacherRepository teacherRepository;
 
 
     House GRYFFINDOR = new House("Gryffindor", "Godric Gryffindor", new String[]{"Scarlet", "Gold"});
@@ -26,6 +31,7 @@ public class InitData implements CommandLineRunner {
 
     public InitData(StudentRepository studentRepository){
         this.studentRepository = studentRepository;
+        this.teacherRepository = teacherRepository;
     }
 
     public void run(String... arg){
@@ -44,6 +50,8 @@ public class InitData implements CommandLineRunner {
         Student student11 = new Student("Cho", null, "Chang", LocalDate.parse("1979-09-01"), "Ravenclaw", false, 1991, 1998, true);
         Student student12 = new Student("Seamus", null, "Finnigan", LocalDate.parse("1980-10-01"), "Gryffindor", false, 1991, 1998, true);
 
+        Teacher teacher1= new Teacher("Pomona", "", "Sprout", LocalDate.parse("1941-05-15"), "HUFFLEPUFF", "PROFESSOR", LocalDate.of(1974, 9, 1), LocalDate.of(2001, 6, 30));
+
         System.out.println(student1);
         System.out.println(student2);
         studentRepository.save(student1);
@@ -58,6 +66,8 @@ public class InitData implements CommandLineRunner {
         studentRepository.save(student10);
         studentRepository.save(student11);
         studentRepository.save(student12);
+        teacherRepository.save(teacher1);
+
 
 
 

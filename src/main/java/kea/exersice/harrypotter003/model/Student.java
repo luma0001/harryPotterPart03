@@ -12,6 +12,8 @@ public class Student {
 @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    private boolean headBotOrGirl;
+
     private String firstName;
     private String middleName;
     private String lastName;
