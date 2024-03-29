@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -79,6 +80,35 @@ public Course createCourse(@RequestBody Course course) {return courseRepository.
         return  courseRepository.save(course);
  }
 
+
+@PutMapping("{id}/teacher")
+public ResponseEntity<Course> updateCourseTeacher
+        (@PathVariable int id, @RequestBody Teacher teacher) {
+    Optional<Course> courseOptional = courseRepository.findById(id);
+    if (courseOptional.isPresent()) {
+        Course course = courseOptional.get();
+        course.setTeacher(teacher);
+        return ResponseEntity.ok(course);
+    } else {
+        return ResponseEntity.notFound().build();
+    }
+}
+
+@PutMapping("{id}/students")
+public ResponseEntity<Course> updateCourseStudents
+        (@PathVariable int id, @RequestBody List<Student> students){
+    Optional<Course> courseOptional = courseRepository.findById(id);
+    if(courseOptional.isPresent()){
+      Course course = courseOptional.get();
+      course.setStudents(students);
+      return ResponseEntity.ok(course);
+    } else {
+        return ResponseEntity.notFound().build();
+    }
+}
+
+
+
  // Delete a Course
      @DeleteMapping("{id}")
      public ResponseEntity<Course> deleteCourse(@PathVariable int id){
@@ -86,5 +116,68 @@ public Course createCourse(@RequestBody Course course) {return courseRepository.
      courseRepository.deleteById(id);
      return ResponseEntity.of(deleteCourse);
  }
+
+ // Delete the course students
+    @DeleteMapping("{id}/students")
+    public ResponseEntity<Course> deleteCourseStudents(@PathVariable int id){
+        Optional<Course> courseOptional = courseRepository.findById(id);
+        if(courseOptional.isPresent()){
+            Course course = courseOptional.get();
+            course.setStudents(new ArrayList<>());
+            courseRepository.save(course);
+            return ResponseEntity.ok(course);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+
+
+    @DeleteMapping("{courseId}/students/{studentId}")
+    public ResponseEntity<Course> deleteCourseStudent(@PathVariable int courseId, @PathVariable int studentId) {
+        Optional<Course> courseOptional = courseRepository.findById(courseId);
+        if (courseOptional.isPresent()) {
+            Course course = courseOptional.get();
+            List<Student> students = course.getStudents();
+            students.removeIf(student -> student.getId() == studentId); // Remove the student with the given ID
+            course.setStudents(students);
+            courseRepository.save(course);
+            return ResponseEntity.ok(course);
+        } else {
+            return ResponseEntity.notFound().build(); // Course not found
+        }
+    }
+
+// ---- Denne Har En Fejl et sted...
+//    @DeleteMapping("{courseId}/students/{studentId}")
+//    public ResponseEntity<Course> deleteCourseStudent(@PathVariable int courseId, @RequestBody int studentId){
+//    Optional<Course> courseOptional = courseRepository.findById(courseId);
+//    if(courseOptional.isPresent()){
+//        Course course = courseOptional.get();
+//        List<Student> students = course.getStudents();
+//        students.removeIf(student -> student.getId() == studentId);
+//        course.setStudents(students);
+//        courseRepository.save(course);
+//        return ResponseEntity.ok(course);
+//    } else {
+//        return ResponseEntity.notFound().build();
+//    }
+//    }
+
+
+    // Delete the course teacher
+    @DeleteMapping("{id}/teacher")
+    public ResponseEntity<Course> deleteCourseTeacher(@PathVariable int id){
+    Optional<Course> courseOptional = courseRepository.findById(id);
+    if(courseOptional.isPresent()){
+        Course course = courseOptional.get();
+        course.setTeacher(null);
+        courseRepository.save(course);
+        return ResponseEntity.ok(course);
+    } else {
+        return ResponseEntity.notFound().build();
+    }
+    }
+
 
 }
