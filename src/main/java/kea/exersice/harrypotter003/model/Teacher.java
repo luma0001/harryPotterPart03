@@ -1,7 +1,7 @@
 package kea.exersice.harrypotter003.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import kea.exersice.harrypotter003.model.EmpType;
 
 import java.time.LocalDate;
 
@@ -11,13 +11,17 @@ import java.time.LocalDate;
 @Entity
 public class Teacher {
     @Id
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
     private String firsName;
     private String middleName;
     private String lastName;
     private LocalDate DateOfBirth;
-    private String house;
-    private String employmentType;
+    //@OneToOne
+    @ManyToOne
+    @JoinColumn(name = "house")
+    private House house;
+    private EmpType employmentType;
     private LocalDate employmentStart;
     private LocalDate employmentEnd;
 
@@ -26,15 +30,23 @@ public class Teacher {
     public Teacher() {
     }
 
-    public Teacher(String firsName, String middleName, String lastName, LocalDate dateOfBirth, String house, String employmentType, LocalDate employmentStart, LocalDate empploymentEnd) {
+    public Teacher(String firsName, String middleName, String lastName, LocalDate dateOfBirth, House house, EmpType employmentType, LocalDate employmentStart, LocalDate employmentEnd) {
         this.firsName = firsName;
         this.middleName = middleName;
         this.lastName = lastName;
         DateOfBirth = dateOfBirth;
         this.house = house;
-        this.employmentType = String.valueOf(employmentType);
+        this.employmentType = employmentType;
         this.employmentStart = employmentStart;
-        this.employmentEnd = empploymentEnd;
+        this.employmentEnd = employmentEnd;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getFirsName() {
@@ -69,19 +81,19 @@ public class Teacher {
         DateOfBirth = dateOfBirth;
     }
 
-    public String getHouse() {
+    public House getHouse() {
         return house;
     }
 
-    public void setHouse(String house) {
+    public void setHouse(House house) {
         this.house = house;
     }
 
-    public String getEmploymentType() {
+    public EmpType getEmploymentType() {
         return employmentType;
     }
 
-    public void setEmploymentType(String employmentType) {
+    public void setEmploymentType(EmpType employmentType) {
         this.employmentType = employmentType;
     }
 
@@ -93,33 +105,11 @@ public class Teacher {
         this.employmentStart = employmentStart;
     }
 
-    public LocalDate getEmpploymentEnd() {
+    public LocalDate getEmploymentEnd() {
         return employmentEnd;
     }
 
-    public void setEmpploymentEnd(LocalDate empploymentEnd) {
-        this.employmentEnd = empploymentEnd;
-    }
-
-    @Override
-    public String toString() {
-        return "Teacher{" +
-                "firsName='" + firsName + '\'' +
-                ", middleName='" + middleName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", DateOfBirth=" + DateOfBirth +
-                ", house='" + house + '\'' +
-                ", employmentType='" + employmentType + '\'' +
-                ", employmentStart=" + employmentStart +
-                ", empploymentEnd=" + employmentEnd +
-                '}';
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getId() {
-        return id;
+    public void setEmploymentEnd(LocalDate employmentEnd) {
+        this.employmentEnd = employmentEnd;
     }
 }

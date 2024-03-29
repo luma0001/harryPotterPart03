@@ -10,8 +10,6 @@ public class HarryPotter003Application {
 	public static void main(String[] args) {
 		SpringApplication.run(HarryPotter003Application.class, args);
 		System.out.println("Harry Potter and the REST-API is running");
-//		InitData initData = new InitData();
-//        initData.run();
 
 	}
 

@@ -1,16 +1,16 @@
-package kea.exersice.harrypotter003.service;
-
-
-// en optional er ligesom en liste der kan være tom eller have 1 student. Vi vil altid returne noget - er listen tom, kan vi gøre noget...
-
-import kea.exersice.harrypotter003.DTO.StudentDTO;
-import kea.exersice.harrypotter003.model.Student;
-import kea.exersice.harrypotter003.repository.StudentRepository;
-
-import java.util.List;
-import java.util.Optional;
-
-public class StudentService {
+//package kea.exersice.harrypotter003.service;
+//
+//
+//// en optional er ligesom en liste der kan være tom eller have 1 student. Vi vil altid returne noget - er listen tom, kan vi gøre noget...
+//
+//import kea.exersice.harrypotter003.DTO.StudentDTO;
+//import kea.exersice.harrypotter003.model.Student;
+//import kea.exersice.harrypotter003.repository.StudentRepository;
+//
+//import java.util.List;
+//import java.util.Optional;
+//
+//public class StudentService {
 
 
 ////    private StudentRepository studentRepository;
@@ -101,4 +101,4 @@ public class StudentService {
 //
 //        return entity;
 //}
-}
+//}

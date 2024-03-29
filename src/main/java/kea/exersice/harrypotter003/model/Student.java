@@ -9,17 +9,19 @@ import java.util.Arrays;
 @Entity
 public class Student {
     @Id
-@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
-    private boolean headBotOrGirl;
 
     private String firstName;
     private String middleName;
     private String lastName;
 
     private LocalDate DateOfBirth;
-    private String house;
+    //@OneToOne
+    // This change should resolve the issue you were facing with duplicate entry errors when saving multiple students with the same house. Now, multiple students can reference the same house without violating any constraints.
+    @ManyToOne
+    @JoinColumn(name = "house")
+    private House house;
     private boolean prefect;
     private int enrollementYear;
     private int graduationYear;
@@ -27,6 +29,14 @@ public class Student {
 
     public Student() {
 
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getFirstName() {
@@ -53,11 +63,19 @@ public class Student {
         this.lastName = lastName;
     }
 
-    public String getHouse() {
+    public LocalDate getDateOfBirth() {
+        return DateOfBirth;
+    }
+
+    public void setDateOfBirth(LocalDate dateOfBirth) {
+        DateOfBirth = dateOfBirth;
+    }
+
+    public House getHouse() {
         return house;
     }
 
-    public void setHouse(String house) {
+    public void setHouse(House house) {
         this.house = house;
     }
 
@@ -68,7 +86,6 @@ public class Student {
     public void setPrefect(boolean prefect) {
         this.prefect = prefect;
     }
-
 
     public int getEnrollementYear() {
         return enrollementYear;
@@ -94,24 +111,7 @@ public class Student {
         this.graduated = graduated;
     }
 
-    public LocalDate getDateOfBirth() {
-        return DateOfBirth;
-    }
-
-
-    public void setDateOfBirth(LocalDate dateOfBirth) {
-        DateOfBirth = dateOfBirth;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public Student(String firstName, String middleName, String lastName, LocalDate DateOfBirth, String house, boolean prefect, int enrollementYear, int graduationYear, boolean graduated) {
+    public Student(String firstName, String middleName, String lastName, LocalDate DateOfBirth, House house, boolean prefect, int enrollementYear, int graduationYear, boolean graduated) {
         this.firstName = firstName;
         this.middleName = middleName;
         this.lastName = lastName;
@@ -123,21 +123,23 @@ public class Student {
         this.graduated = graduated;
     }
 
-    @Override
-    public String toString() {
-        return "Student{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", middleName='" + middleName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", DateOfBirth=" + DateOfBirth +
-                ", house='" + house + '\'' +
-                ", prefect=" + prefect +
-                ", enrollementYear=" + enrollementYear +
-                ", graduationYear=" + graduationYear +
-                ", graduated=" + graduated +
-                '}';
-    }
+
+//    @Override
+//    public String toString() {
+//        return "Student{" +
+//                "id=" + id +
+//                ", firstName='" + firstName + '\'' +
+//                ", middleName='" + middleName + '\'' +
+//                ", lastName='" + lastName + '\'' +
+//                ", DateOfBirth=" + DateOfBirth +
+//                ", house='" + (house != null ? house.getName() : "N/A") + '\'' +
+//                ", prefect=" + prefect +
+//                ", enrollementYear=" + enrollementYear +
+//                ", graduationYear=" + graduationYear +
+//                ", graduated=" + graduated +
+//                '}';
+//    }
+
 }
 
 

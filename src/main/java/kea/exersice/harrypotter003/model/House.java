@@ -1,14 +1,29 @@
 package kea.exersice.harrypotter003.model;
 
-import java.util.Arrays;
+import jakarta.persistence.ElementCollection;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+//import org.springframework.data.annotation.Id;
+import jakarta.persistence.Id;
 
+import java.util.Arrays;
+import java.util.List;
+
+@Entity
 public class House {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+   // @jakarta.persistence.Id
+    private int id;
 
     private String name;
     private String founder;
-    private String[] colors;
 
-    public House(String name, String founder, String[] colors) {
+    @ElementCollection
+    private List<String> colors;
+
+    public House(String name, String founder, List<String>  colors) {
         this.name = name;
         this.founder = founder;
         this.colors = colors;
@@ -33,20 +48,19 @@ public class House {
         this.founder = founder;
     }
 
-    public String[] getColors() {
+    public List<String> getColors() {
         return colors;
     }
 
-    public void setColors(String[] colors) {
+    public void setColors(List<String> colors) {
         this.colors = colors;
     }
 
-    @Override
-    public String toString() {
-        return "House{" +
-                "name='" + name + '\'' +
-                ", founder='" + founder + '\'' +
-                ", colors=" + Arrays.toString(colors) +
-                '}';
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
     }
 }

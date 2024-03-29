@@ -1,5 +1,7 @@
 package kea.exersice.harrypotter003.repository;
 
-public interface HouseRepository {
-//    Jpa <House, String>
+import kea.exersice.harrypotter003.model.House;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface HouseRepository extends JpaRepository<House, Integer> {
 }
