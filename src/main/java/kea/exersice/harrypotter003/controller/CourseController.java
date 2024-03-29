@@ -81,6 +81,9 @@ public Course createCourse(@RequestBody Course course) {return courseRepository.
  }
 
 
+
+
+ // HAVE ISSUES - WHAT IS THE DATA NEEDED TO TEST IT? ID/OR OBJECT?
 @PutMapping("{id}/teacher")
 public ResponseEntity<Course> updateCourseTeacher
         (@PathVariable int id, @RequestBody Teacher teacher) {
@@ -88,6 +91,7 @@ public ResponseEntity<Course> updateCourseTeacher
     if (courseOptional.isPresent()) {
         Course course = courseOptional.get();
         course.setTeacher(teacher);
+        courseRepository.save(course);
         return ResponseEntity.ok(course);
     } else {
         return ResponseEntity.notFound().build();
@@ -101,6 +105,7 @@ public ResponseEntity<Course> updateCourseStudents
     if(courseOptional.isPresent()){
       Course course = courseOptional.get();
       course.setStudents(students);
+      courseRepository.save(course);
       return ResponseEntity.ok(course);
     } else {
         return ResponseEntity.notFound().build();
