@@ -28,16 +28,7 @@ import java.util.List;
         }
 
         @GetMapping("{id}")
-        public ResponseEntity<House> getTeacher(@PathVariable int id){
+        public ResponseEntity<House> getTeacher(@PathVariable String id){
             return ResponseEntity.of(houseRepository.findById(id));
         }
-
-        @PostMapping
-        @ResponseStatus(HttpStatus.CREATED)
-        public House createTeacher(@RequestBody House house) {
-            return houseRepository.save(house);
-        }
-
-
-
     }

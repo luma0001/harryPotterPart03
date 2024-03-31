@@ -2,8 +2,7 @@ package kea.exersice.harrypotter003.controller;
 
 
 import kea.exersice.harrypotter003.model.Student;
-import kea.exersice.harrypotter003.repository.StudentRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import kea.exersice.harrypotter003.service.StudentService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,43 +15,38 @@ import java.util.Optional;
 @RequestMapping("/students")
 public class StudentController {
 
-    private StudentRepository studentRepository;
+    private StudentService studentService;
 
-    private StudentController(StudentRepository studentRepository) {
-        this.studentRepository = studentRepository;
+    private StudentController(StudentService studentService) {
+        this.studentService = studentService;
     }
 
     @GetMapping
     public List<Student> getAll() {
-        return studentRepository.findAll();
+        return studentService.findAll();
     }
 
-
-
     @GetMapping("{id}")
-    public ResponseEntity<Student> getOneStudent(@PathVariable int id ) {
+    public ResponseEntity<Student> getStudent(@PathVariable int id ) {
         //Optional<Student> student = studentRepository.findById(id);
-        return ResponseEntity.of(studentRepository.findById(id));
+        return ResponseEntity.of(studentService.findById(id));
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Student createStudent(@RequestBody Student student) {
-        return studentRepository.save(student);
+        return studentService.save(student);
     }
 
     @PutMapping("{id}")
-    public Student updateStudent(@PathVariable int id, @RequestBody Student student) {
+    public ResponseEntity<Student> updateStudent(@PathVariable int id, @RequestBody Student student) {
         student.setId(id);
-        return studentRepository.save(student);
+        return ResponseEntity.of(studentService.updateIfExists(id, student));
     }
 
     @DeleteMapping("{id}")
     public ResponseEntity<Student> deleteStudent(@PathVariable int id) {
-        Optional<Student> deleteStudent = studentRepository.findById(id);
-        studentRepository.deleteById(id);
-        return ResponseEntity.of(deleteStudent);
-        //return deleteStudent.orElse();
+        return ResponseEntity.of(studentService.deleteById(id));
     }
 
 }
